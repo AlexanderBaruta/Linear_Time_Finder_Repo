@@ -10,7 +10,8 @@ Kth::~Kth()
     //dtor
     }
 
-int Kth::Small(vector<int> unsorted_list, int k, const int v_max, bool med)
+//This takes in the vector of ints, the k to find,
+int Kth::Small(vector<int> unsorted_list, int k)
     {
     //Sanity Checking
     if(k > 0)
@@ -55,7 +56,7 @@ int Kth::Small(vector<int> unsorted_list, int k, const int v_max, bool med)
             //Find the median value among all medians
             if(medians.size() > 1)
                 {
-                M = Small(medians, medians.size() / 2, v_max, 1);
+                M = Small(medians, medians.size() / 2);
                 }
             else
                 {
@@ -85,7 +86,7 @@ int Kth::Small(vector<int> unsorted_list, int k, const int v_max, bool med)
             //Recurral part is determined by Partitioning
             else
                 {
-                return Small(Partitioned, k, v_max, 0);
+                return Small(Partitioned, k);
                 }
 
             }

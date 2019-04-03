@@ -13,7 +13,7 @@ class Kth
         Kth();
         virtual ~Kth();
 
-        int Small(vector<int>, int k, const int v_max, bool med);
+        int Small(vector<int>, int k);
         int Find_Median(vector<int> &);
 
         vector<int> Part(vector<int>, int M, int &k);

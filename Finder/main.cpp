@@ -77,7 +77,7 @@ int main()
     //We can pass it into the solver
     //We'll be calling this recursively, so the answer should be the value returned by this initial call
     int result;
-    result = Ks.Small(unsorted_list, k, val_max, 0);
+    result = Ks.Small(unsorted_list, k);
     cout << result << endl;
 
     return 0;
