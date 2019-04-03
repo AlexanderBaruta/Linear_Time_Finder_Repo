@@ -1,0 +1,20 @@
+# depslib dependency file v1.0
+1554319075 source:d:\small_linear_time\finder\src\kth.cpp
+	"Kth.h"
+
+1554318432 d:\small_linear_time\finder\include\kth.h
+	<vector>
+	<algorithm>
+	<vector>
+	<iostream>
+
+1554318445 source:d:\small_linear_time\finder\main.cpp
+	<iostream>
+	<fstream>
+	<vector>
+	<random>
+	<stdlib.h>
+	<algorithm>
+	<string>
+	"Kth.h"
+
