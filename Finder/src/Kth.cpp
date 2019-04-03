@@ -12,16 +12,12 @@ Kth::~Kth()
 
 int Kth::Small(vector<int> unsorted_list, int k, const int v_max, bool med)
     {
-        cout << "Recurred" << endl;
-        cout << k << " " << unsorted_list.size() << " " << med << endl;
     //Sanity Checking
     if(k > 0)
         {
         if(k <= unsorted_list.size())
             {
-                int useless;
-                //cin >> useless;
-
+            //Create the vectors for the medians and the semi_sorted list
             vector<int> medians;
             vector<int> semi_sorted_list;
 
@@ -42,44 +38,55 @@ int Kth::Small(vector<int> unsorted_list, int k, const int v_max, bool med)
             p = m * 5;
             if(p < unsorted_list.size())
                 {
+                //Create the intermediate vector
                 vector<int> med_get;
+                //Go through and get the remaining elements in the unsorted_list
                 for(p; p < unsorted_list.size(); p++)
                     {
                     med_get.emplace_back(unsorted_list[p]);
                     }
+                //Add this median to the list of medians
                 medians.emplace_back(Find_Median(med_get));
+                //Add the values to the semi-sorted list
                 semi_sorted_list.insert(end(semi_sorted_list), begin(med_get), end(med_get));
                 }
 
             int M;
             //Find the median value among all medians
             if(medians.size() > 1)
-            {
-                cout << "Getting Median of Medians" << endl;
+                {
                 M = Small(medians, medians.size() / 2, v_max, 1);
-            }
+                }
             else
-            {
+                {
                 M = medians[0];
-            }
+                }
 
+            //Get either the upper or lower part of the vector
+            //Depending on where k falls
             vector<int>Partitioned = Part(semi_sorted_list, M, k);
 
+            //If the median value is k
             if(Partitioned.size() == k)
-            {
+                {
                 cout << "Found K" << endl;
+                //Return k
                 return Partitioned[Partitioned.size() - 1];
-            }
+                }
+            //Otherwise if there are only 2 elements left
+            //Find the smaller of the two and return that,
+            //Since the other case is handled by the previous return
+            //Safer to just use the min anyway
             else if(Partitioned.size()==2)
-            {
-                cout << "Found K in Size of 2" << endl;
-                return Partitioned[k-1];
-            }
+                {
+                return min(Partitioned[0], Partitioned[1]);
+                }
+            //Otherwise we need to recur
+            //Recurral part is determined by Partitioning
             else
-            {
-                cout << "Recurring on Partition" << endl;
+                {
                 return Small(Partitioned, k, v_max, 0);
-            }
+                }
 
             }
         else
@@ -93,6 +100,8 @@ int Kth::Small(vector<int> unsorted_list, int k, const int v_max, bool med)
 
 //Find the median of a sorted vector
 //Might as well use the general algorithm here
+//This sorts the subarrays
+//While also finding the median
 int Kth::Find_Median(vector<int> &m)
     {
     sort(m.begin(), m.end());
@@ -105,35 +114,48 @@ int Kth::Find_Median(vector<int> &m)
 
 
 vector<int> Kth::Part(vector<int> v, int m, int &k)
-{
+    {
     //Partition the vector into two smaller vectors
     //One containing <= m, the other containing >m
     //Want to guarentee that m is the last element in lv
+
+    //Construct the lower and upper vectors to store values
     vector<int> lv, uv;
 
+    //For each element in v
     for(int i = 0; i < v.size(); i++)
-    {
+        {
+        //if the element is < m
+        //Store it in the lower v
         if(v[i] < m)
-        {
+            {
             lv.push_back(v[i]);
-        }
+            }
+        //Else if the element is > m
+        //store it in the upper v
         if(v[i] > m)
-        {
+            {
             uv.push_back(v[i]);
+            }
         }
-    }
+
+    //Append m to the list of lower values
     lv.push_back(m);
 
+    //if k is in the lower list
+    //return lv
     if(k <= lv.size())
-    {
+        {
         return lv;
-    }
+        }
+    //Otherwise subtract the size of the lower list from k
+    //And return the upper list
     else
-    {
+        {
         k -= lv.size();
         return uv;
+        }
     }
-}
 
 
 
